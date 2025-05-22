@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bagira Assistant</title>
+</head>
+<body>
+  <h1>Talk to Bagira 🐾</h1>
+  <p>Click the mic to ask legal questions.</p>
+
+  <script>
+    var vapiInstance = null;
+
+    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0"; // Replace with real public key
+
+    const squad = {
+      name: "Call Centre v1.3 EN",
+      members: [
+        {
+          assistantId: "f60d3d06-8dd2-4e0e-b0e5-ed28384203a2",
+          assistantDestinations: [
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Сompany expert (EN)",
+              message: "One second",
+              description: "If client has questions regarding company registration"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Appointment master (EN)",
+              message: "",
+              description: "If user wants to book a consultation"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - TRP expert (EN)",
+              message: "One second",
+              description: "If client has questions regarding residence permit"
+            }
+          ]
+        },
+        {
+          assistantId: "d102f12f-719c-4a1e-bd61-5b96553c8b9c",
+          assistantOverrides: {
+            firstMessageMode: "assistant-speaks-first-with-model-generated-message",
+            firstMessage: "What is your question?"
+          },
+          assistantDestinations: [
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Appointment master (EN)",
+              message: "",
+              description: "If user wants to book a consultation"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - First responder (EN)",
+              message: "Give me a second",
+              description: "If client has questions regarding other topics"
+            }
+          ]
+        },
+        {
+          assistantId: "0d9091fa-b7d0-4bc1-a57f-53d6e3db7771",
+          assistantOverrides: {
+            firstMessageMode: "assistant-speaks-first-with-model-generated-message",
+            firstMessage: "What is your question?"
+          },
+          assistantDestinations: [
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Appointment master (EN)",
+              message: "",
+              description: "If user wants to book a consultation"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - First responder (EN)",
+              message: "Give me a second",
+              description: "Other questions"
+            }
+          ]
+        },
+        {
+          assistantId: "4c5c9cf8-2001-4566-8c65-8318b8814db4",
+          assistantOverrides: {
+            firstMessageMode: "assistant-speaks-first-with-model-generated-message"
+          },
+          assistantDestinations: [
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - First responder (EN)",
+              message: " ",
+              description: "Fallback"
+            }
+          ]
+        }
+      ]
+    };
+
+    (function (d, t) {
+      var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      g.defer = true;
+      g.async = true;
+      s.parentNode.insertBefore(g, s);
+
+      g.onload = function () {
+        vapiInstance = window.vapiSDK.run({
+          apiKey: apiKey,
+          squad: squad,
+          config: {
+            position: "bottom-right",
+            idle: {
+              color: "#1E90FF",
+              type: "pill",
+              title: "Talk to Bagira",
+              subtitle: "Voice Legal Help",
+              icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg"
+            }
+          }
+        });
+      };
+    })(document, "script");
+  </script>
+</body>
+</html>
