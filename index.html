@@ -2,16 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Bagira Assistant</title>
+  <title>Talk to Bagira</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      text-align: center;
+      padding: 80px 20px;
+      color: #2a2a2a;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .vapi-container {
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      bottom: 24px !important;
+    }
+    #bagira-phone-form {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+    }
+    #bagira-phone-form input {
+      padding: 8px;
+      font-size: 1rem;
+      width: 200px;
+    }
+    #bagira-phone-form button {
+      padding: 8px 16px;
+      margin-left: 8px;
+      background: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #bagira-phone-form button:hover {
+      background: #1575d4;
+    }
+  </style>
 </head>
 <body>
-  <h1>Talk to Bagira 🐾</h1>
-  <p>Click the mic to ask legal questions.</p>
+  <h1>Talk to Bagira</h1>
+  <p>Your AI legal assistant is here to help 24/7.</p>
+
+  <div id="bagira-phone-form">
+    <p>Please enter your phone number:</p>
+    <input type="tel" id="bagira-user-phone" placeholder="+994..." />
+    <button onclick="submitBagiraPhone()">Submit</button>
+  </div>
 
   <script>
-    var vapiInstance = null;
+    function showPhoneForm() {
+      document.getElementById("bagira-phone-form").style.display = "block";
+    }
 
-    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0"; // Replace with real public key
+    function submitBagiraPhone() {
+      const phone = document.getElementById("bagira-user-phone").value;
+      alert("Thank you! We'll contact you at: " + phone);
+      document.getElementById("bagira-phone-form").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const waitForVapi = setInterval(() => {
+        if (window.vapiInstance) {
+          clearInterval(waitForVapi);
+          window.vapiInstance.onResponse((response) => {
+            const msg = response.message?.toLowerCase() || "";
+            if (msg.includes("type your phone number") && msg.includes("confirm")) {
+              showPhoneForm();
+            }
+          });
+        }
+      }, 500);
+    });
+
+    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0"; // ✅ Your real public key
 
     const squad = {
       name: "Call Centre v1.3 EN",
@@ -91,32 +171,33 @@
               type: "assistant",
               assistantName: "BAGIRA - First responder (EN)",
               message: " ",
-              description: "Fallback"
+              description: "Fallback for any other topic"
             }
           ]
         }
       ]
     };
 
+    let vapiInstance = null;
     (function (d, t) {
-      var g = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
+      const g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
       g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-      g.defer = true;
       g.async = true;
+      g.defer = true;
       s.parentNode.insertBefore(g, s);
 
       g.onload = function () {
         vapiInstance = window.vapiSDK.run({
-          apiKey: apiKey,
-          squad: squad,
+          apiKey,
+          squad,
           config: {
             position: "bottom-right",
             idle: {
               color: "#1E90FF",
               type: "pill",
               title: "Talk to Bagira",
-              subtitle: "Voice Legal Help",
+              subtitle: "Voice Legal Assistant",
               icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg"
             }
           }
