@@ -1,125 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bagira Legal Assistant</title>
+  <meta charset="UTF-8" />
+  <title>Bagira Assistant</title>
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; }
-    h1 { text-align: center; margin-top: 40px; }
-    #phone-form {
+    #popupForm {
       display: none;
       position: fixed;
-      bottom: 100px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      background: #fff;
-      padding: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      background-color: white;
+      padding: 20px;
+      border: 2px solid #1E90FF;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      font-family: sans-serif;
     }
-    #phone-form input {
-      margin-right: 8px;
+
+    #popupForm input {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
       padding: 8px;
-      font-size: 16px;
+      font-size: 14px;
     }
-    #mic-button {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #007bff;
+
+    #popupForm button {
+      background-color: #1E90FF;
+      color: white;
       border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 24px;
-      color: #fff;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      outline: none;
-      z-index: 1000;
     }
-    #mic-button:active { box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
-  <h1>Welcome to Bagira Legal Assistant</h1>
-  <form id="phone-form">
-    <label for="phone-input">Phone Number:</label>
-    <input type="tel" id="phone-input" placeholder="+994..." required />
-    <button type="submit">Submit</button>
-  </form>
-  <button id="mic-button">🎤</button>
+  <h1>Talk to Bagira 🐾</h1>
+  <p>Click the mic to ask legal questions.</p>
+
+  <!-- Form popup -->
+  <div id="popupForm">
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" name="phone" placeholder="+994..." />
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="example@email.com" />
+    <button onclick="submitForm()">Submit</button>
+  </div>
+
   <script>
-    var vapi;
+    var vapiInstance = null;
+    var formShown = false;
+
+    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0";
+
     const squad = {
       name: "Call Centre v1.3 EN",
       members: [
         {
           assistantId: "f60d3d06-8dd2-4e0e-b0e5-ed28384203a2",
           assistantDestinations: [
-            { type: "assistant", assistantName: "BAGIRA - Сompany expert (EN)", message: "One second", description: "If client has questions regarding company registration" },
-            { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
-            { type: "assistant", assistantName: "BAGIRA - TRP expert (EN)", message: "One second", description: "If client has questions regarding residence permit" }
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Сompany expert (EN)",
+              message: "One second",
+              description: "If client has questions regarding company registration"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Appointment master (EN)",
+              message: "",
+              description: "If user wants to book a consultation"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - TRP expert (EN)",
+              message: "One second",
+              description: "If client has questions regarding residence permit"
+            }
           ]
         },
         {
           assistantId: "d102f12f-719c-4a1e-bd61-5b96553c8b9c",
-          assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message", firstMessage: "What is your question?" },
+          assistantOverrides: {
+            firstMessageMode: "assistant-speaks-first-with-model-generated-message",
+            firstMessage: "What is your question?"
+          },
           assistantDestinations: [
-            { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
-            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: "Give me a second", description: "If client has questions regarding other topics" }
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Appointment master (EN)",
+              message: "",
+              description: "If user wants to book a consultation"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - First responder (EN)",
+              message: "Give me a second",
+              description: "If client has questions regarding other topics"
+            }
           ]
         },
         {
           assistantId: "0d9091fa-b7d0-4bc1-a57f-53d6e3db7771",
-          assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message", firstMessage: "What is your question?" },
+          assistantOverrides: {
+            firstMessageMode: "assistant-speaks-first-with-model-generated-message",
+            firstMessage: "What is your question?"
+          },
           assistantDestinations: [
-            { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
-            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: "Give me a second", description: "Other questions" }
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - Appointment master (EN)",
+              message: "",
+              description: "If user wants to book a consultation"
+            },
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - First responder (EN)",
+              message: "Give me a second",
+              description: "Other questions"
+            }
           ]
         },
         {
           assistantId: "4c5c9cf8-2001-4566-8c65-8318b8814db4",
-          assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message" },
+          assistantOverrides: {
+            firstMessageMode: "assistant-speaks-first-with-model-generated-message"
+          },
           assistantDestinations: [
-            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: " ", description: "Fallback for any other topic" }
-          ]
-        }
-      ]
-    };
-    (function(d, t) {
-      var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      g.src = "https://cdn.jsdelivr.net/npm/@vapi-ai/html-script-tag@latest/dist/assets/index.js";
-      g.defer = true;
-      g.async = true;
-      s.parentNode.insertBefore(g, s);
-      g.onload = function() {
-        vapi = window.vapiSDK.run({
-          apiKey: "58f89212-0e94-4123-8f9e-3bc0dde56fe0",
-          squad: squad
-        });
-        vapi.on("message", function(data) {
-          const msg = data.content || "";
-          if (/type your phone number/i.test(msg) && /confirm/i.test(msg)) {
-            document.getElementById("phone-form").style.display = "block";
-          }
-        });
-      };
-    })(document, "script");
-    document.getElementById("mic-button").addEventListener("click", function() {
-      if (vapi && vapi.open) {
-        vapi.open();
-      }
-    });
-    document.getElementById("phone-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      var phone = document.getElementById("phone-input").value;
-      alert("Phone number: " + phone);
-      console.log("Phone number:", phone);
-    });
-  </script>
-</body>
-</html>
+            {
+              type: "assistant",
+              assistantName: "BAGIRA - First responder
