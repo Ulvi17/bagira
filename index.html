@@ -110,7 +110,7 @@
             ]
         };
 
-        const vapi = new window.vapiSDK({ apiKey, squad });
+        const vapi = window.vapiSDK({ apiKey, squad });
 
         document.getElementById("micButton").onclick = () => vapi.start();
 
