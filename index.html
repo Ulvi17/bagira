@@ -1,61 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Bagira Assistant</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bagira Legal Assistant</title>
   <style>
-    #popupForm {
+    body { margin: 0; font-family: Arial, sans-serif; }
+    h1 { text-align: center; margin-top: 40px; }
+    #phone-form {
       display: none;
       position: fixed;
-      top: 50%;
+      bottom: 100px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      background: #ffffff;
-      padding: 20px;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      z-index: 9999;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    #popupForm input {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
+    #phone-form input {
+      margin-right: 8px;
       padding: 8px;
-      box-sizing: border-box;
+      font-size: 16px;
     }
-    #popupForm button {
-      padding: 10px 15px;
-      cursor: pointer;
-    }
-    #popupOverlay {
+    #mic-button {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      z-index: 9998;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #007bff;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      outline: none;
+      z-index: 1000;
     }
+    #mic-button:active { box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
-  <h1>Talk to Bagira 🐾</h1>
-  <p>Click the mic to ask legal questions.</p>
-
-  <div id="popupOverlay"></div>
-  <div id="popupForm">
-    <h3>Please enter your details</h3>
-    <input type="tel" id="phone" placeholder="Phone Number" required>
-    <input type="email" id="email" placeholder="Email" required>
-    <button onclick="submitForm()">Submit</button>
-  </div>
-
+  <h1>Welcome to Bagira Legal Assistant</h1>
+  <form id="phone-form">
+    <label for="phone-input">Phone Number:</label>
+    <input type="tel" id="phone-input" placeholder="+994..." required />
+    <button type="submit">Submit</button>
+  </form>
+  <button id="mic-button">🎤</button>
   <script>
-    var vapiInstance = null;
-
-    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0";
-
+    var vapi;
     const squad = {
       name: "Call Centre v1.3 EN",
       members: [
@@ -87,49 +85,41 @@
           assistantId: "4c5c9cf8-2001-4566-8c65-8318b8814db4",
           assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message" },
           assistantDestinations: [
-            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: " ", description: "Fallback" }
+            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: " ", description: "Fallback for any other topic" }
           ]
         }
       ]
     };
-
-    (function (d, t) {
+    (function(d, t) {
       var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      g.src = "https://cdn.jsdelivr.net/npm/@vapi-ai/html-script-tag@latest/dist/assets/index.js";
       g.defer = true;
       g.async = true;
       s.parentNode.insertBefore(g, s);
-
-      g.onload = function () {
-        vapiInstance = window.vapiSDK.run({
-          apiKey: apiKey,
-          squad: squad,
-          config: {
-            position: "bottom-right",
-            idle: {
-              color: "#1E90FF",
-              type: "pill",
-              title: "Talk to Bagira",
-              subtitle: "Voice Legal Help",
-              icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg"
-            }
+      g.onload = function() {
+        vapi = window.vapiSDK.run({
+          apiKey: "58f89212-0e94-4123-8f9e-3bc0dde56fe0",
+          squad: squad
+        });
+        vapi.on("message", function(data) {
+          const msg = data.content || "";
+          if (/type your phone number/i.test(msg) && /confirm/i.test(msg)) {
+            document.getElementById("phone-form").style.display = "block";
           }
         });
-
-        document.querySelector('.vapi-pill').onclick = function() {
-          document.getElementById('popupOverlay').style.display = 'block';
-          document.getElementById('popupForm').style.display = 'block';
-        };
       };
     })(document, "script");
-
-    function submitForm() {
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      alert(`Phone: ${phone}\nEmail: ${email}`);
-      document.getElementById('popupOverlay').style.display = 'none';
-      document.getElementById('popupForm').style.display = 'none';
-    }
+    document.getElementById("mic-button").addEventListener("click", function() {
+      if (vapi && vapi.open) {
+        vapi.open();
+      }
+    });
+    document.getElementById("phone-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      var phone = document.getElementById("phone-input").value;
+      alert("Phone number: " + phone);
+      console.log("Phone number:", phone);
+    });
   </script>
 </body>
 </html>
