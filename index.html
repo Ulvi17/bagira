@@ -1,135 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMZE LAW - Bagira Assistant</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding-bottom: 100px;
-            background-color: #f8f9fa;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        #phoneForm {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        #phoneInput {
-            padding: 10px;
-            font-size: 16px;
-            width: 250px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        #micButton {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px;
-            border-radius: 50%;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bagira Legal Assistant</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    h1 { text-align: center; margin-top: 40px; }
+    #phone-form {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #phone-form input {
+      margin-right: 8px;
+      padding: 8px;
+      font-size: 16px;
+    }
+    .vapi-btn {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+  </style>
 </head>
 <body>
-
-    <h1>Welcome to EMZE LAW - Talk to Bagira</h1>
-
-    <form id="phoneForm">
-        <input type="tel" id="phoneInput" placeholder="Enter your phone number" required>
-        <button type="submit">Submit</button>
-    </form>
-
-    <button id="micButton">🎤</button>
-
-    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/html-script-tag@latest/dist/assets/index.js"></script>
-
-    <script>
-        const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0";
-
-        const squad = {
-            name: "Call Centre v1.3 EN",
-            members: [
-                {
-                    assistantId: "f60d3d06-8dd2-4e0e-b0e5-ed28384203a2",
-                    assistantDestinations: [
-                        { type: "assistant", assistantName: "BAGIRA - Сompany expert (EN)", message: "One second", description: "If client has questions regarding company registration" },
-                        { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
-                        { type: "assistant", assistantName: "BAGIRA - TRP expert (EN)", message: "One second", description: "If client has questions regarding residence permit" }
-                    ]
-                },
-                {
-                    assistantId: "d102f12f-719c-4a1e-bd61-5b96553c8b9c",
-                    assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message", firstMessage: "What is your question?" },
-                    assistantDestinations: [
-                        { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
-                        { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: "Give me a second", description: "If client has questions regarding other topics" }
-                    ]
-                },
-                {
-                    assistantId: "0d9091fa-b7d0-4bc1-a57f-53d6e3db7771",
-                    assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message", firstMessage: "What is your question?" },
-                    assistantDestinations: [
-                        { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
-                        { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: "Give me a second", description: "Other questions" }
-                    ]
-                },
-                {
-                    assistantId: "4c5c9cf8-2001-4566-8c65-8318b8814db4",
-                    assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message" },
-                    assistantDestinations: [
-                        { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: " ", description: "Fallback for any other topic" }
-                    ]
-                }
-            ]
-        };
-
-        const vapi = window.vapiSDK({ apiKey, squad });
-
-        document.getElementById("micButton").onclick = () => vapi.start();
-
-        vapi.on('message', (message) => {
-            const msg = message.text.toLowerCase();
-            if (msg.includes("type your phone number") && msg.includes("confirm")) {
-                document.getElementById("phoneForm").style.display = "flex";
-            }
+  <h1>Welcome to Bagira Legal Assistant</h1>
+  <form id="phone-form">
+    <label for="phone-input">Phone Number:</label>
+    <input type="tel" id="phone-input" placeholder="+994..." required />
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    const squad = {
+      name: "Call Centre v1.3 EN",
+      members: [
+        {
+          assistantId: "f60d3d06-8dd2-4e0e-b0e5-ed28384203a2",
+          assistantDestinations: [
+            { type: "assistant", assistantName: "BAGIRA - Сompany expert (EN)", message: "One second", description: "If client has questions regarding company registration" },
+            { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
+            { type: "assistant", assistantName: "BAGIRA - TRP expert (EN)", message: "One second", description: "If client has questions regarding residence permit" }
+          ]
+        },
+        {
+          assistantId: "d102f12f-719c-4a1e-bd61-5b96553c8b9c",
+          assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message", firstMessage: "What is your question?" },
+          assistantDestinations: [
+            { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
+            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: "Give me a second", description: "If client has questions regarding other topics" }
+          ]
+        },
+        {
+          assistantId: "0d9091fa-b7d0-4bc1-a57f-53d6e3db7771",
+          assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message", firstMessage: "What is your question?" },
+          assistantDestinations: [
+            { type: "assistant", assistantName: "BAGIRA - Appointment master (EN)", message: "", description: "If user wants to book a consultation" },
+            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: "Give me a second", description: "Other questions" }
+          ]
+        },
+        {
+          assistantId: "4c5c9cf8-2001-4566-8c65-8318b8814db4",
+          assistantOverrides: { firstMessageMode: "assistant-speaks-first-with-model-generated-message" },
+          assistantDestinations: [
+            { type: "assistant", assistantName: "BAGIRA - First responder (EN)", message: " ", description: "Fallback for any other topic" }
+          ]
+        }
+      ]
+    };
+    (function(d, t) {
+      var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      g.src = "https://cdn.jsdelivr.net/npm/@vapi-ai/html-script-tag@latest/dist/assets/index.js";
+      g.defer = true;
+      g.async = true;
+      s.parentNode.insertBefore(g, s);
+      g.onload = function() {
+        const vapi = window.vapiSDK.run({
+          apiKey: "58f89212-0e94-4123-8f9e-3bc0dde56fe0",
+          squad: squad,
+          config: { position: "bottom-right", offset: "20px" }
         });
-
-        document.getElementById("phoneForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const phoneNumber = document.getElementById("phoneInput").value;
-            alert("Your phone number: " + phoneNumber);
-            document.getElementById("phoneForm").reset();
-            document.getElementById("phoneForm").style.display = "none";
+        vapi.on("message", function(data) {
+          const msg = data.content || "";
+          if (/type your phone number/i.test(msg) && /confirm/i.test(msg)) {
+            document.getElementById("phone-form").style.display = "block";
+          }
         });
-
-    </script>
-
+      };
+    })(document, "script");
+    document.getElementById("phone-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      var phone = document.getElementById("phone-input").value;
+      alert("Phone number: " + phone);
+      console.log("Phone number:", phone);
+    });
+  </script>
 </body>
 </html>
