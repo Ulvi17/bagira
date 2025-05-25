@@ -4,37 +4,51 @@
   <meta charset="UTF-8" />
   <title>Bagira Assistant</title>
   <style>
-    #popupForm {
-      display: none;
+    /* Modal overlay */
+    #bagiraFormModal {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      background-color: white;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+    }
+    /* Modal box */
+    #bagiraFormModal .modal-content {
+      position: relative;
+      background: #fff;
       padding: 20px;
-      border: 2px solid #1E90FF;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      font-family: sans-serif;
-    }
-
-    #popupForm input {
-      display: block;
-      margin-bottom: 10px;
-      width: 100%;
-      padding: 8px;
-      font-size: 14px;
-    }
-
-    #popupForm button {
-      background-color: #1E90FF;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      font-size: 14px;
       border-radius: 5px;
+      width: 320px;
+      box-sizing: border-box;
+    }
+    /* Close button */
+    #closeModal {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      line-height: 1;
       cursor: pointer;
+    }
+    /* Header */
+    #bagiraFormModal .modal-header {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    /* Inputs & submit */
+    #bagiraFormModal input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    #bagiraFormModal button[type="submit"] {
+      padding: 10px 20px;
     }
   </style>
 </head>
@@ -42,21 +56,33 @@
   <h1>Talk to Bagira 🐾</h1>
   <p>Click the mic to ask legal questions.</p>
 
-  <!-- Form popup -->
-  <div id="popupForm">
-    <label for="phone">Phone Number:</label>
-    <input type="text" id="phone" name="phone" placeholder="+994..." />
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="example@email.com" />
-    <button onclick="submitForm()">Submit</button>
+  <!-- Popup form -->
+  <div id="bagiraFormModal">
+    <div class="modal-content">
+      <button id="closeModal" aria-label="Close">&times;</button>
+      <div class="modal-header">
+        Please fill in the form below, so we would send you booking confirmation if you book a slot
+      </div>
+      <form id="bagiraForm">
+        <label>
+          Phone Number:<br>
+          <input type="tel" id="phoneInput" required placeholder="+1234567890">
+        </label>
+        <label>
+          Email:<br>
+          <input type="email" id="emailInput" required placeholder="you@example.com">
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   </div>
 
   <script>
     var vapiInstance = null;
-    var formShown = false;
 
-    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0";
+    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0"; // Replace with your real key
 
+    // Full squad object exactly as in your original code
     const squad = {
       name: "Call Centre v1.3 EN",
       members: [
@@ -133,4 +159,65 @@
           assistantDestinations: [
             {
               type: "assistant",
-              assistantName: "BAGIRA - First responder
+              assistantName: "BAGIRA - First responder (EN)",
+              message: " ",
+              description: "Fallback"
+            }
+          ]
+        }
+      ]
+    };
+
+    (function (d, t) {
+      var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      g.defer = g.async = true;
+      s.parentNode.insertBefore(g, s);
+
+      g.onload = function () {
+        // Initialize VAPI with correct squad.members
+        vapiInstance = window.vapiSDK.run({
+          apiKey: apiKey,
+          squad: squad,
+          config: {
+            position: "bottom-right",
+            idle: {
+              color: "#1E90FF",
+              type: "pill",
+              title: "Talk to Bagira",
+              subtitle: "Voice Legal Help",
+              icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg"
+            }
+          }
+        });
+
+        // Grab modal elements
+        const modal = document.getElementById("bagiraFormModal");
+        const form  = document.getElementById("bagiraForm");
+        const close = document.getElementById("closeModal");
+
+        // Show the modal when the voice session starts
+        vapiInstance.on("call-start", () => {
+          modal.style.display = "flex";
+        });
+
+        // Close button hides the modal
+        close.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+
+        // Form submit handler
+        form.addEventListener("submit", function(e) {
+          e.preventDefault();
+          const phone = document.getElementById("phoneInput").value;
+          const email = document.getElementById("emailInput").value;
+          console.log("Phone:", phone, "Email:", email);
+          alert(`Phone: ${phone}\nEmail: ${email}`);
+          modal.style.display = "none";
+        });
+      };
+    })(document, "script");
+  </script>
+</body>
+</html>
