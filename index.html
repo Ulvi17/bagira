@@ -4,6 +4,29 @@
   <meta charset="UTF-8" />
   <title>Bagira Assistant</title>
   <style>
+    /* General body style for context */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f7f6; /* Light background for the page */
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    /* --- Modal Styles --- */
     /* Modal overlay */
     #bagiraFormModal {
       position: fixed;
@@ -11,73 +34,126 @@
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
       z-index: 10000;
+      backdrop-filter: blur(3px); /* Optional: frosted glass effect */
     }
 
     /* Modal box */
     #bagiraFormModal .modal-content {
       position: relative;
       background: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      width: 320px;
+      padding: 25px 30px; /* Increased padding */
+      border-radius: 8px; /* Softer rounded corners */
+      width: 350px; /* Slightly wider */
       box-sizing: border-box;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
+      text-align: left; /* Ensure text alignment is standard */
     }
 
     /* Close button */
     #closeModal {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 12px;
+      right: 12px;
       background: transparent;
       border: none;
-      font-size: 1.2rem;
+      font-size: 1.5rem; /* Larger for easier click */
       line-height: 1;
       cursor: pointer;
+      color: #888;
+      transition: color 0.2s ease-in-out;
+    }
+    #closeModal:hover {
+      color: #555;
     }
 
     /* Header */
     #bagiraFormModal .modal-header {
-      margin-bottom: 15px;
-      font-size: 1rem;
-      font-weight: bold;
+      margin-bottom: 20px; /* More space below header */
+      font-size: 1.1rem; /* Slightly larger header text */
+      font-weight: 600; /* Semi-bold */
+      color: #333;
     }
 
-    /* Inputs & submit */
+    /* Labels */
+    #bagiraFormModal label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #454545;
+    }
+
+    /* Inputs */
     #bagiraFormModal input {
       width: 100%;
-      margin-bottom: 10px;
-      padding: 8px;
+      margin-bottom: 15px; /* More space between inputs */
+      padding: 12px 15px; /* More padding inside inputs */
       box-sizing: border-box;
+      border: 1px solid #dcdcdc; /* Lighter border */
+      border-radius: 6px; /* Rounded corners for inputs */
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
+    #bagiraFormModal input:focus {
+      outline: none;
+      border-color: #7A3FFD; /* Bagira's purple accent on focus */
+      box-shadow: 0 0 0 2px rgba(122, 63, 253, 0.2); /* Subtle glow */
+    }
+
+    #bagiraFormModal input::placeholder {
+        color: #aaa;
+        opacity: 1; /* Firefox */
+    }
+
+    /* Submit button */
     #bagiraFormModal button[type="submit"] {
-      padding: 10px 20px;
+      width: 100%; /* Full width button */
+      padding: 12px 20px;
+      background-color: #7A3FFD; /* Bagira's purple accent */
+      color: white;
+      border: none;
+      border-radius: 6px; /* Rounded corners */
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+      margin-top: 10px; /* Space above button */
+    }
+
+    #bagiraFormModal button[type="submit"]:hover {
+      background-color: #6028d1; /* Darker shade on hover */
+    }
+    #bagiraFormModal button[type="submit"]:active {
+      transform: scale(0.98); /* Click effect */
     }
   </style>
 </head>
 <body>
   <h1>Talk to Bagira 🐾</h1>
-  <p>Click the mic to ask legal questions.</p>
+  <p>Click the mic to ask legal questions or book a consultation.</p>
 
   <!-- Popup form -->
   <div id="bagiraFormModal">
     <div class="modal-content">
-      <button id="closeModal" aria-label="Close">&times;</button>
+      <button id="closeModal" aria-label="Close">×</button>
       <div class="modal-header">
-        Please fill in the form below, so we would send you booking confirmation if you book a slot
+        Please provide your details below to confirm your booking.
       </div>
       <form id="bagiraForm">
-        <label>
-          Phone Number:<br>
-          <input type="tel" id="phoneInput" required placeholder="+1234567890">
+        <label for="phoneInput">
+          Phone Number:
         </label>
-        <label>
-          Email:<br>
-          <input type="email" id="emailInput" required placeholder="you@example.com">
+        <input type="tel" id="phoneInput" required placeholder="+1234567890">
+
+        <label for="emailInput">
+          Email:
         </label>
-        <button type="submit">Submit</button>
+        <input type="email" id="emailInput" required placeholder="you@example.com">
+
+        <button type="submit">Submit Details</button>
       </form>
     </div>
   </div>
@@ -186,7 +262,7 @@
           config: {
             position: "bottom-right",
             idle: {
-              color: "#1E90FF",
+              color: "#7A3FFD",
               type: "pill",
               title: "Talk to Bagira",
               subtitle: "Voice Legal Help",
@@ -198,10 +274,41 @@
         const modal = document.getElementById("bagiraFormModal");
         const form  = document.getElementById("bagiraForm");
         const close = document.getElementById("closeModal");
+        const phoneInput = document.getElementById("phoneInput"); // Get phone input for focusing
 
-        vapiInstance.on("call-start", () => {
-          modal.style.display = "flex";
+        // --- MODIFIED PART: Modal display logic ---
+        // REMOVED: Old logic to show modal on call-start
+        // vapiInstance.on("call-start", () => {
+        //   modal.style.display = "flex";
+        // });
+
+        vapiInstance.on("message", (message) => {
+          // console.log("VAPI Message:", message); // For debugging message structure
+
+          if (
+            message.type === "transcript" &&
+            message.role === "assistant" &&
+            message.transcriptType === "final" && // Ensure we act on the complete sentence
+            message.transcript
+          ) {
+            const assistantUtterance = message.transcript.toLowerCase().trim();
+            // The exact phrase from the assistant's script, converted to lowercase
+            const targetPhrase = "please type your phone number below to confirm.";
+
+            // Check if the assistant's utterance *is* the target phrase.
+            // Using .includes() could also work if there are minor variations like punctuation.
+            // Given the script says "exact phrase", a direct comparison (after normalization) is appropriate.
+            if (assistantUtterance === targetPhrase) {
+              if (modal.style.display !== "flex") { // Only show if not already visible
+                modal.style.display = "flex";
+                phoneInput.focus(); // Auto-focus the phone input field
+                // Update modal header to be more specific to the context
+                document.querySelector("#bagiraFormModal .modal-header").textContent = "Please enter your phone and email to confirm your booking.";
+              }
+            }
+          }
         });
+        // --- END OF MODIFIED PART ---
 
         close.addEventListener("click", () => {
           modal.style.display = "none";
@@ -210,8 +317,13 @@
         form.addEventListener("submit", function(e) {
           e.preventDefault();
 
-          const phone = document.getElementById("phoneInput").value;
+          const phone = phoneInput.value;
           const email = document.getElementById("emailInput").value;
+
+          const submitButton = form.querySelector('button[type="submit"]');
+          const originalButtonText = submitButton.textContent;
+          submitButton.disabled = true;
+          submitButton.textContent = "Submitting...";
 
           fetch("https://primary-production-3672.up.railway.app/webhook/bagira-submit", {
             method: "POST",
@@ -222,9 +334,9 @@
           })
           .then(response => {
             if (response.ok) {
-              alert("Submission successful! ✅");
+              alert("Submission successful! ✅ Your booking details have been received.");
             } else {
-              alert("Submission failed. ❌ Please try again.");
+              alert("Submission failed. ❌ Please try again or contact support.");
             }
             modal.style.display = "none";
           })
@@ -232,6 +344,12 @@
             console.error("Error submitting form:", error);
             alert("Something went wrong. ❌\n" + (error.message || error));
             modal.style.display = "none";
+          })
+          .finally(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+            // Optionally reset form fields here
+            // form.reset();
           });
         });
       };
