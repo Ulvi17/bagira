@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"> <!-- Set language to Russian -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bagira AI - Intelligent Legal Assistant for Law Firms</title>
+  <title>Bagira AI - Интеллектуальный Ассистент для Юридических Фирм</title> <!-- Russian Title -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* --- General Page Styles --- */
+    /* --- General Page Styles (Unchanged) --- */
     :root {
-      --primary-color: #7A3FFD; /* Bagira's purple accent */
+      --primary-color: #7A3FFD; 
       --primary-darker: #6028d1;
       --secondary-color: #22A39F; 
       --text-color-dark: #2c3e50;
@@ -19,7 +19,6 @@
       --success-color: #28a745;
       --error-color: #dc3545;
     }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       margin: 0;
@@ -30,15 +29,12 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
     .container {
       width: 90%;
       max-width: 1024px; 
       margin: 0 auto;
       padding: 0 15px;
     }
-
-    /* --- Re-usable Button Style --- */
     .btn {
       display: inline-block;
       padding: 12px 24px;
@@ -51,7 +47,6 @@
       text-align: center;
       border: none;
     }
-
     .btn-primary {
       background-color: var(--primary-color);
       color: white;
@@ -98,42 +93,78 @@
       margin: 0;
     }
 
-    /* --- Hero Section --- */
+    /* --- Hero Section (Updated) --- */
     .hero-section {
         background-color: var(--primary-color); 
         color: white;
-        padding: 60px 0;
+        padding: 50px 0 60px 0; /* Adjusted padding */
         text-align: center;
     }
     .hero-section .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
     }
-    .hero-section h1 { 
-        font-size: 2.5rem;
-        margin-bottom: 15px;
+    .hero-section .main-page-heading { /* New main heading */
+        font-size: 2.8rem; /* Larger */
         font-weight: 700;
+        margin-bottom: 15px;
+        max-width: 850px;
+        line-height: 1.2;
+    }
+    .hero-section .main-page-subheading { /* New main subheading */
+        font-size: 1.25rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+        max-width: 750px;
+    }
+     .hero-section .hero-content-title { /* Existing title, now H2 */
+        font-size: 2rem; /* Slightly smaller than main heading */
+        margin-top: 20px; /* Space above this title */
+        margin-bottom: 10px;
+        font-weight: 600;
         max-width: 800px;
     }
-    .hero-section .hero-subtitle {
-        font-size: 1.15rem;
+    .hero-section .hero-subtitle { /* Existing subtitle */
+        font-size: 1.1rem;
         margin-bottom: 25px;
-        opacity: 0.9;
+        opacity: 0.85;
         max-width: 700px;
     }
-    .hero-section .hero-image-placeholder {
-        font-size: 100px; 
-        color: rgba(255,255,255,0.5);
-        margin-bottom: 20px;
+    /* Removed .hero-image-placeholder as video placeholder is more prominent */
+    .hero-section #joinPilotBtnHero { /* Specific ID for hero button */
+        margin-bottom: 40px; /* Space before video */
     }
+
+    /* YouTube Video Placeholder Styles */
+    .youtube-video-placeholder {
+        width: 100%;
+        max-width: 720px; /* Typical video width */
+        aspect-ratio: 16 / 9; /* Common video aspect ratio */
+        background-color: #333; /* Dark background */
+        border: 2px dashed #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #ccc;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        margin: 0 auto; /* Center it */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .youtube-video-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
 
     main {
       flex-grow: 1;
       padding: 30px 0;
     }
-
     section {
       padding: 40px 0; 
       text-align: center;
@@ -141,7 +172,6 @@
     section:nth-child(even) { 
         background-color: var(--bg-white);
     }
-
     section h2.section-title { 
       font-size: 2rem; 
       color: var(--text-color-dark);
@@ -154,8 +184,6 @@
       max-width: 700px;
       margin: 0 auto 40px auto; 
     }
-    
-    /* --- Features & Problems Grid --- */
     .info-grid { 
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -188,8 +216,6 @@
         color: var(--text-color-light);
         margin-bottom: 0;
     }
-
-    /* --- CTA Section (for VAPI demo) --- */
     .cta-vapi-section {
       background-color: var(--primary-darker);
       color: white;
@@ -207,8 +233,6 @@
         color: rgba(255,255,255,0.9);
         margin-bottom: 0;
     }
-
-    /* --- Footer --- */
     footer.page-footer {
       background-color: var(--text-color-dark);
       color: #bdc3c7;
@@ -228,12 +252,6 @@
     footer.page-footer a:hover {
         text-decoration: underline;
     }
-    .footer-social-links a {
-        margin: 0 8px;
-        font-size: 1.2rem;
-    }
-
-    /* --- MODAL STYLES (COMMON FOR BOTH MODALS) --- */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -339,11 +357,16 @@
         color: var(--error-color);
         border: 1px solid var(--error-color);
     }
-
-    /* Responsive adjustments */
+    @media (max-width: 992px) { /* Added breakpoint for hero section */
+        .hero-section .main-page-heading { font-size: 2.4rem; }
+        .hero-section .main-page-subheading { font-size: 1.15rem; }
+        .hero-section .hero-content-title { font-size: 1.8rem; }
+    }
     @media (max-width: 768px) {
         header.page-header h1.site-title { font-size: 1.8rem; }
-        .hero-section h1 { font-size: 2rem; }
+        .hero-section .main-page-heading { font-size: 2rem; }
+        .hero-section .main-page-subheading { font-size: 1.1rem; }
+        .hero-section .hero-content-title { font-size: 1.6rem; }
         section h2.section-title { font-size: 1.6rem; }
         .container { width: 95%; }
         .info-grid { grid-template-columns: 1fr; } 
@@ -358,39 +381,50 @@
           <span class="logo-icon">🐾</span>
           <h1 class="site-title">BAGIRA AI</h1>
       </div>
-      <p class="tagline">Intelligent Automation for Modern Law Firms</p>
+      <p class="tagline">Интеллектуальная Автоматизация для Современных Юридических Фирм</p>
     </div>
   </header>
 
   <section class="hero-section">
       <div class="container">
-          <div class="hero-image-placeholder"><i class="fas fa-robot"></i></div>
-          <h1>Stop Losing Leads: How Many Potential Clients Slip Away Each Week?</h1>
-          <p class="hero-subtitle">Bagira AI: Your 24/7 Intelligent Assistant to Engage, Qualify, and Convert Prospects for Your Law Firm.</p>
-          <button id="joinPilotBtn" class="btn btn-primary" style="background-color: #FFD240; color: var(--primary-darker);">Join Our Pilot Program</button>
+          <h1 class="main-page-heading">Преобразите Вашу Юридическую Практику с Помощью ИИ</h1>
+          <p class="main-page-subheading">Bagira AI автоматизирует рутинные задачи, повышает эффективность и помогает вам сосредоточиться на главном – ваших клиентах и делах.</p>
+          
+          <h2 class="hero-content-title">Хватит Терять Клиентов: Сколько Потенциальных Лидов Ускользает Каждую Неделю?</h2>
+          <p class="hero-subtitle">Bagira AI: Ваш круглосуточный интеллектуальный ассистент для привлечения, квалификации и конвертации потенциальных клиентов для вашей юридической фирмы.</p>
+          <button id="joinPilotBtnHero" class="btn btn-primary" style="background-color: #FFD240; color: var(--primary-darker);">Присоединиться к Пилотной Программе</button>
+          
+          <div class="youtube-video-placeholder">
+              <div>
+                  <i class="fab fa-youtube"></i>
+                  Ваше видео о Bagira AI здесь<br>
+                  (Замените этот блок на iframe код вашего видео)<br>
+                  Пример ссылки: XXXX
+              </div>
+          </div>
       </div>
   </section>
 
   <main>
     <section class="features-section">
         <div class="container">
-            <h2 class="section-title">Empower Your Firm with Bagira AI</h2>
-            <p class="section-subtitle">Streamline your client intake, improve responsiveness, and free up your team for billable work.</p>
+            <h2 class="section-title">Расширьте Возможности Вашей Фирмы с Bagira AI</h2>
+            <p class="section-subtitle">Оптимизируйте процесс привлечения клиентов, улучшите скорость ответа и освободите вашу команду для оплачиваемой работы.</p>
             <div class="info-grid">
                 <div class="info-item">
                     <span class="item-icon"><i class="fas fa-comments"></i></span>
-                    <h3>Instant Lead Qualification</h3>
-                    <p>Engage website visitors immediately, ask qualifying questions, and identify high-potential leads 24/7.</p>
+                    <h3>Мгновенная Квалификация Лидов</h3>
+                    <p>Привлекайте посетителей сайта немедленно, задавайте квалифицирующие вопросы и выявляйте высокопотенциальных лидов 24/7.</p>
                 </div>
                 <div class="info-item">
                     <span class="item-icon"><i class="fas fa-calendar-check"></i></span>
-                    <h3>Automated Appointment Setting</h3>
-                    <p>Seamlessly book qualified leads for initial consultations directly into your firm's calendar based on your availability.</p>
+                    <h3>Автоматическая Запись на Консультацию</h3>
+                    <p>Беспрепятственно записывайте квалифицированных лидов на первичные консультации прямо в календарь вашей фирмы согласно вашей доступности.</p>
                 </div>
                 <div class="info-item">
                     <span class="item-icon"><i class="fas fa-clock"></i></span>
-                    <h3>Never Miss an Opportunity</h3>
-                    <p>Capture leads and provide initial support even outside office hours, ensuring no prospect is ignored.</p>
+                    <h3>Никогда Не Упускайте Возможность</h3>
+                    <p>Собирайте лидов и оказывайте первичную поддержку даже в нерабочее время, гарантируя, что ни один потенциальный клиент не будет проигнорирован.</p>
                 </div>
             </div>
         </div>
@@ -398,23 +432,23 @@
 
     <section class="problems-section">
         <div class="container">
-            <h2 class="section-title">Solve Your Firm's Intake Challenges</h2>
-            <p class="section-subtitle">Traditional client intake can't keep up. Bagira addresses the critical pain points.</p>
+            <h2 class="section-title">Решите Проблемы Привлечения Клиентов в Вашей Фирме</h2>
+            <p class="section-subtitle">Традиционные методы привлечения клиентов устарели. Bagira решает ключевые болевые точки.</p>
             <div class="info-grid">
                 <div class="info-item">
                     <span class="item-icon"><i class="fas fa-user-clock"></i></span>
-                    <h3>Delayed Responses Lose Clients</h3>
-                    <p>Prospects expect immediate engagement. Delays mean they move on to your competitors.</p>
+                    <h3>Задержки с Ответом Ведут к Потере Клиентов</h3>
+                    <p>Потенциальные клиенты ожидают немедленного взаимодействия. Задержки означают, что они уходят к вашим конкурентам.</p>
                 </div>
                 <div class="info-item">
                     <span class="item-icon"><i class="fas fa-microphone-slash"></i></span>
-                    <h3>Impersonal Frontlines Don't Convert</h3>
-                    <p>Voicemails and generic call centers lack legal context and fail to build rapport or qualify effectively.</p>
+                    <h3>Безличный Первый Контакт Не Конвертирует</h3>
+                    <p>Голосовая почта и стандартные колл-центры лишены юридического контекста и не могут эффективно выстроить доверие или квалифицировать лидов.</p>
                 </div>
                 <div class="info-item">
                     <span class="item-icon"><i class="fas fa-folder-minus"></i></span>
-                    <h3>Inefficient Processes Drain Resources</h3>
-                    <p>Manual lead screening and scheduling consume valuable time that could be spent on legal work.</p>
+                    <h3>Неэффективные Процессы Истощают Ресурсы</h3>
+                    <p>Ручная проверка лидов и планирование встреч отнимают ценное время, которое можно было бы потратить на юридическую работу.</p>
                 </div>
             </div>
         </div>
@@ -422,10 +456,10 @@
 
     <section class="cta-vapi-section">
       <div class="container">
-        <h3>Experience Bagira in Action</h3>
+        <h3>Попробуйте Bagira в Действии</h3>
         <p>
-          See how Bagira interacts with potential clients. Click the microphone icon
-          (usually at the bottom-right of your screen) for a live demo of the client-facing experience.
+          Узнайте, как Bagira взаимодействует с потенциальными клиентами. Нажмите на иконку микрофона
+          (обычно в правом нижнем углу экрана) для демонстрации клиентского опыта.
         </p>
       </div>
     </section>
@@ -433,69 +467,56 @@
 
   <footer class="page-footer">
     <div class="container">
-      <p>© <span id="currentYear"></span> Bagira AI. All rights reserved.</p>
-      <div class="footer-social-links">
-          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      </div>
+      <p>© <span id="currentYear"></span> Bagira AI. Все права защищены.</p>
     </div>
   </footer>
 
-  <!-- MODAL 1: VAPI Client Booking Confirmation (Existing Functionality) -->
+  <!-- MODAL 1: VAPI Client Booking Confirmation -->
   <div id="bagiraFormModal" class="modal-overlay">
     <div class="modal-content">
-      <button id="closeBagiraModal" class="modal-close-btn" aria-label="Close">×</button>
+      <button id="closeBagiraModal" class="modal-close-btn" aria-label="Закрыть">×</button>
       <div id="bagiraModalHeader" class="modal-header-title">
-        Please provide your details to confirm your booking.
+        Пожалуйста, укажите ваши данные для подтверждения записи.
       </div>
       <form id="bagiraForm">
-        <label for="phoneInput">Phone Number:</label>
-        <input type="tel" id="phoneInput" required placeholder="+1234567890">
+        <label for="phoneInput">Номер телефона:</label>
+        <input type="tel" id="phoneInput" required placeholder="+7 (XXX) XXX-XX-XX">
 
-        <label for="emailInput">Email:</label>
+        <label for="emailInput">Электронная почта:</label>
         <input type="email" id="emailInput" required placeholder="you@example.com">
         
-        <button type="submit">Submit Details</button>
+        <button type="submit">Отправить данные</button>
       </form>
     </div>
   </div>
 
-  <!-- MODAL 2: Pilot Program Signup (New Functionality) -->
+  <!-- MODAL 2: Pilot Program Signup -->
   <div id="pilotFormModal" class="modal-overlay">
     <div class="modal-content">
-        <button id="closePilotModal" class="modal-close-btn" aria-label="Close">×</button>
-        <div class="modal-header-title">Join the Bagira AI Pilot Program</div>
+        <button id="closePilotModal" class="modal-close-btn" aria-label="Закрыть">×</button>
+        <div class="modal-header-title">Присоединиться к Пилотной Программе Bagira AI</div>
         <form id="pilotProgramForm">
-            <label for="pilotName">Your Name:</label>
-            <input type="text" id="pilotName" name="name" required placeholder="e.g., Jane Doe">
+            <label for="pilotName">Ваше имя:</label>
+            <input type="text" id="pilotName" name="name" required placeholder="например, Иван Иванов">
 
-            <label for="pilotCompanyName">Company Name:</label>
-            <input type="text" id="pilotCompanyName" name="companyName" required placeholder="e.g., Doe & Associates Law">
+            <label for="pilotCompanyName">Название компании:</label>
+            <input type="text" id="pilotCompanyName" name="companyName" required placeholder="например, ООО «Юридические Решения»">
 
-            <label for="pilotWebsite">Company Website:</label>
-            <input type="url" id="pilotWebsite" name="website" required placeholder="https://www.examplelaw.com">
+            <label for="pilotWebsite">Сайт компании:</label>
+            <input type="url" id="pilotWebsite" name="website" required placeholder="https://www.examplelaw.ru">
 
-            <button type="submit" id="submitPilotForm">Submit Application</button>
+            <button type="submit" id="submitPilotForm">Отправить заявку</button>
         </form>
         <div id="pilotFormMessage" class="modal-message"></div>
     </div>
   </div>
 
-
   <script>
-    // --- Set Current Year in Footer ---
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // --- VAPI WIDGET & MODAL 1 (Client Booking) SCRIPT ---
     var vapiInstance = null;
-    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0"; // Replace with your real key
-    
-    // OPTIMIZED: Using VAPI Squad ID instead of inline squad object
+    const apiKey = "58f89212-0e94-4123-8f9e-3bc0dde56fe0"; 
     const vapiSquadId = "f468f8d5-b6bd-44fd-b39e-358278e86404"; 
-
-    // REMOVED: The large inline 'const squad = { ... }' object is no longer needed here.
-    // It's now managed in your VAPI Dashboard under the Squad ID.
 
     (function (d, t) {
       var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -506,10 +527,10 @@
       g.onload = function () {
         vapiInstance = window.vapiSDK.run({
           apiKey: apiKey,
-          squad: vapiSquadId, // Use the Squad ID here
+          squad: vapiSquadId, 
           config: {
             position: "bottom-right",
-            idle: { color: "#7A3FFD", type: "pill", title: "Talk to Bagira", subtitle: "Voice Legal Help", icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg" }
+            idle: { color: "#7A3FFD", type: "pill", title: "Поговорить с Bagira", subtitle: "Голосовой юр. помощник", icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg" } // Russian VAPI text
           }
         });
 
@@ -522,52 +543,55 @@
         vapiInstance.on("message", (message) => {
           if (message.type === "transcript" && message.role === "assistant" && message.transcriptType === "final" && message.transcript) {
             const assistantUtterance = message.transcript.toLowerCase().trim();
-            const coreTriggerPhrase = "type your phone number below to confirm";
+            // Consider if this trigger phrase needs to be Russian if your VAPI assistant speaks Russian here
+            const coreTriggerPhrase = "type your phone number below to confirm"; // Or Russian equivalent: "введите ваш номер телефона ниже для подтверждения"
             if (assistantUtterance.includes(coreTriggerPhrase)) {
               if (bagiraModal.style.display !== "flex") {
                 bagiraModal.style.display = "flex";
                 phoneClientInput.focus();
-                bagiraModalHeader.textContent = "Please enter your phone and email to confirm your booking.";
+                bagiraModalHeader.textContent = "Пожалуйста, введите ваш телефон и email для подтверждения записи.";
               }
             }
           }
         });
 
-        closeBagiraModalBtn.addEventListener("click", () => { bagiraModal.style.display = "none"; });
+        if(closeBagiraModalBtn) { 
+            closeBagiraModalBtn.addEventListener("click", () => { bagiraModal.style.display = "none"; });
+        }
 
-        bagiraClientForm.addEventListener("submit", function(e) {
-          e.preventDefault();
-          const phone = phoneClientInput.value;
-          const email = document.getElementById("emailInput").value;
-          const submitButton = bagiraClientForm.querySelector('button[type="submit"]');
-          const originalButtonText = submitButton.textContent;
-          submitButton.disabled = true;
-          submitButton.textContent = "Submitting...";
-          fetch("https://primary-production-3672.up.railway.app/webhook/bagira-submit", {
-            method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, email })
-          })
-          .then(response => {
-            if (response.ok) { alert("Submission successful! ✅ Your booking details have been received."); }
-            else { alert("Submission failed. ❌ Please try again or contact support."); }
-            bagiraModal.style.display = "none";
-          })
-          .catch(error => {
-            console.error("Error submitting Bagira form:", error);
-            alert("Something went wrong. ❌\n" + (error.message || error));
-            bagiraModal.style.display = "none";
-          })
-          .finally(() => {
-            submitButton.disabled = false;
-            submitButton.textContent = originalButtonText;
-          });
-        });
+        if(bagiraClientForm) { 
+            bagiraClientForm.addEventListener("submit", function(e) {
+              e.preventDefault();
+              const phone = phoneClientInput.value;
+              const email = document.getElementById("emailInput").value;
+              const submitButton = bagiraClientForm.querySelector('button[type="submit"]');
+              const originalButtonText = submitButton.textContent;
+              submitButton.disabled = true;
+              submitButton.textContent = "Отправка...";
+              fetch("https://primary-production-3672.up.railway.app/webhook/bagira-submit", {
+                method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, email })
+              })
+              .then(response => {
+                if (response.ok) { alert("Данные успешно отправлены! ✅ Ваша запись подтверждена."); }
+                else { alert("Ошибка отправки. ❌ Пожалуйста, попробуйте еще раз или свяжитесь с поддержкой."); }
+                bagiraModal.style.display = "none";
+              })
+              .catch(error => {
+                console.error("Ошибка отправки формы Bagira:", error);
+                alert("Что-то пошло не так. ❌\n" + (error.message || error));
+                bagiraModal.style.display = "none";
+              })
+              .finally(() => {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+              });
+            });
+        }
       };
     })(document, "script");
 
-
-    // --- PILOT PROGRAM MODAL 2 SCRIPT (NEW - Unchanged from previous version) ---
     const pilotModal = document.getElementById("pilotFormModal");
-    const joinPilotBtn = document.getElementById("joinPilotBtn");
+    const joinPilotBtn = document.getElementById("joinPilotBtnHero"); // Updated ID
     const closePilotModalBtn = document.getElementById("closePilotModal");
     const pilotProgramForm = document.getElementById("pilotProgramForm");
     const pilotFormMessage = document.getElementById("pilotFormMessage");
@@ -575,33 +599,40 @@
 
     if (joinPilotBtn) {
         joinPilotBtn.addEventListener("click", () => {
-            pilotModal.style.display = "flex";
-            pilotFormMessage.style.display = "none"; 
-            pilotProgramForm.reset(); 
+            if(pilotModal) { 
+                pilotModal.style.display = "flex";
+                if(pilotFormMessage) pilotFormMessage.style.display = "none"; 
+                if(pilotProgramForm) pilotProgramForm.reset(); 
+            }
         });
     }
 
     if (closePilotModalBtn) {
         closePilotModalBtn.addEventListener("click", () => {
-            pilotModal.style.display = "none";
+            if(pilotModal) pilotModal.style.display = "none";
         });
     }
 
     window.addEventListener("click", (event) => {
-        if (event.target === pilotModal) {
-            pilotModal.style.display = "none";
+        const bagiraModalElement = document.getElementById("bagiraFormModal");
+        const pilotModalElement = document.getElementById("pilotFormModal");
+
+        if (event.target === pilotModalElement) {
+            pilotModalElement.style.display = "none";
         }
-        if (event.target === document.getElementById("bagiraFormModal")) { 
-            document.getElementById("bagiraFormModal").style.display = "none";
+        if (event.target === bagiraModalElement) { 
+            bagiraModalElement.style.display = "none";
         }
     });
     
     if (pilotProgramForm) {
         pilotProgramForm.addEventListener("submit", function(e) {
             e.preventDefault();
-            pilotFormMessage.style.display = "none"; 
-            submitPilotFormBtn.disabled = true;
-            submitPilotFormBtn.textContent = "Submitting...";
+            if(pilotFormMessage) pilotFormMessage.style.display = "none"; 
+            if(submitPilotFormBtn) {
+                submitPilotFormBtn.disabled = true;
+                submitPilotFormBtn.textContent = "Отправка...";
+            }
 
             const formData = {
                 name: document.getElementById("pilotName").value,
@@ -616,28 +647,36 @@
             })
             .then(response => {
                 if (response.ok) {
-                    pilotFormMessage.textContent = "Thank you! We will contact you soon.";
-                    pilotFormMessage.className = "modal-message success"; 
+                    if(pilotFormMessage) {
+                        pilotFormMessage.textContent = "Спасибо! Мы скоро с вами свяжемся.";
+                        pilotFormMessage.className = "modal-message success"; 
+                    }
                     pilotProgramForm.reset();
                 } else {
-                    return response.json().then(err => { throw err; }); 
+                    return response.json().catch(() => ({ 
+                        message: response.statusText || "Неизвестная ошибка сервера"
+                    })).then(err => { throw err; });
                 }
             })
             .catch(error => {
-                console.error("Error submitting pilot form:", error);
-                let errorMessage = "Submission failed. Please try again.";
+                console.error("Ошибка отправки пилотной формы:", error);
+                let errorMessage = "Ошибка отправки. Пожалуйста, попробуйте еще раз.";
                 if (error && error.message) {
                     errorMessage = error.message;
                 } else if (typeof error === 'string') {
                     errorMessage = error;
                 }
-                pilotFormMessage.textContent = "Error: " + errorMessage;
-                pilotFormMessage.className = "modal-message error"; 
+                if(pilotFormMessage) {
+                    pilotFormMessage.textContent = "Ошибка: " + errorMessage;
+                    pilotFormMessage.className = "modal-message error"; 
+                }
             })
             .finally(() => {
-                submitPilotFormBtn.disabled = false;
-                submitPilotFormBtn.textContent = "Submit Application";
-                pilotFormMessage.style.display = "block"; 
+                if(submitPilotFormBtn) {
+                    submitPilotFormBtn.disabled = false;
+                    submitPilotFormBtn.textContent = "Отправить заявку";
+                }
+                if(pilotFormMessage) pilotFormMessage.style.display = "block"; 
             });
         });
     }
