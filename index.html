@@ -91,11 +91,10 @@
       margin: 0;
     }
 
-    /* --- Hero Section (Updated for white background and single H1/P) --- */
     .hero-section {
-        background-color: var(--bg-white); /* CHANGED */
-        color: var(--text-color-dark);       /* CHANGED */
-        padding: 70px 0 60px 0; /* Increased top padding a bit */
+        background-color: var(--bg-white);
+        color: var(--text-color-dark);
+        padding: 70px 0 60px 0;
         text-align: center;
     }
     .hero-section .container {
@@ -104,64 +103,59 @@
         align-items: center;
     }
     .hero-section .main-page-heading {
-        color: var(--text-color-dark); /* Ensure dark color */
+        color: var(--text-color-dark);
         font-size: 2.8rem;
         font-weight: 700;
-        margin-bottom: 20px; /* Increased margin */
+        margin-bottom: 20px;
         max-width: 850px;
         line-height: 1.2;
     }
     .hero-section .main-page-subheading {
-        color: var(--text-color-light); /* Lighter dark for subheading */
+        color: var(--text-color-light);
         font-size: 1.25rem;
-        margin-bottom: 35px; /* Increased margin */
+        margin-bottom: 35px;
         max-width: 750px;
     }
     .hero-section #joinPilotBtnHero {
         margin-bottom: 40px;
     }
 
-    .youtube-video-placeholder {
+    /* --- YouTube Video Responsive Embed --- */
+    .video-responsive-wrapper {
+        position: relative;
+        overflow: hidden;
         width: 100%;
-        max-width: 720px;
-        aspect-ratio: 16 / 9;
-        background-color: #e9ecef; /* Lighter placeholder bg for white hero */
-        border: 2px dashed #ced4da; /* Lighter border */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #6c757d; /* Darker text for placeholder */
-        font-size: 1.2rem;
-        border-radius: 8px;
-        margin: 0 auto;
-        padding: 20px;
-        box-sizing: border-box;
+        max-width: 720px; /* Max width of video */
+        padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+        margin: 0 auto 40px auto; /* Center and add some bottom margin */
+        border-radius: 8px; /* Optional: if you want rounded corners for the video */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Optional: subtle shadow */
     }
-    .youtube-video-placeholder i {
-        font-size: 3rem;
-        margin-bottom: 10px;
-        color: var(--primary-color); /* Icon color to match theme */
-        display: block;
+    .video-responsive-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border: none; /* Remove iframe border */
     }
 
     main {
       flex-grow: 1;
-      padding: 30px 0; /* Reduced top padding since hero is white */
+      padding-top: 0; /* Hero is white, so main can start directly */
     }
     section {
       padding: 40px 0;
       text-align: center;
     }
-    /* First section after hero (features) might not need a different bg if hero is white */
-    /* section:nth-child(even) {
-        background-color: var(--bg-white);
-    } */
-    /* We'll make the features section have a light grey background for separation */
-    main > section:first-of-type { /* This targets .features-section */
+    /* First section in main (now problems-section) gets light bg */
+    main > section:first-of-type {
         background-color: var(--bg-light);
     }
-     main > section:nth-of-type(even) { /* This targets .problems-section if it's second */
+    /* Second section in main (now features-section) gets white bg */
+    main > section:nth-of-type(2) {
         background-color: var(--bg-white);
     }
 
@@ -186,11 +180,15 @@
         text-align: left;
     }
     .info-item {
-        background-color: var(--bg-white); /* Will contrast with light grey section bg */
+        background-color: var(--bg-white);
         padding: 25px;
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.07);
         border-left: 4px solid var(--primary-color);
+    }
+    /* Adjust info-item bg if its parent section is white */
+    main > section:nth-of-type(2) .info-item { /* If features section is white */
+       /* background-color: var(--bg-light); slightly different if needed, or keep white */
     }
     .info-item .item-icon {
         font-size: 2rem;
@@ -215,7 +213,8 @@
       color: white;
       border-radius: 8px;
       padding: 40px 20px;
-      margin-top: 20px;
+      margin-top: 40px; /* Added margin-top for better separation */
+      margin-bottom: 40px; /* Added margin-bottom for better separation */
     }
     .cta-vapi-section h3 {
       font-size: 1.5rem;
@@ -381,49 +380,24 @@
       <div class="container">
           <h1 class="main-page-heading">Bagira AI: революция в привлечении клиентов для вашей юридической фирмы</h1>
           <p class="main-page-subheading">Наш интеллектуальный ассистент круглосуточно обрабатывает запросы, квалифицирует потенциальных клиентов и назначает консультации, освобождая ваше время для юридической практики.</p>
-          <!-- Removed the second H2 and P that were here -->
           <button id="joinPilotBtnHero" class="btn btn-primary" style="background-color: #FFD240; color: var(--primary-darker);">Присоединиться к пилотной программе</button>
           
-          <div class="youtube-video-placeholder">
-              <div>
-                <iframe width="560" height="315" 
-                        src="https://www.youtube.com/embed/TnSW0MIXkwM" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                </iframe>
-              </div>
+          <!-- YouTube Video Embed -->
+          <div class="video-responsive-wrapper">
+              <iframe 
+                  src="https://www.youtube.com/embed/XXXXXXXXXXX?autoplay=0&rel=0" 
+                  title="Видео о Bagira AI" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen>
+              </iframe>
           </div>
+          <!-- End YouTube Video Embed -->
       </div>
   </section>
 
   <main>
-    <section class="features-section"> <!-- This will now have a var(--bg-light) background -->
-        <div class="container">
-            <h2 class="section-title">Расширьте возможности вашей фирмы с Bagira AI</h2>
-            <p class="section-subtitle">Оптимизируйте процесс привлечения клиентов, улучшите скорость ответа и освободите вашу команду для оплачиваемой работы.</p>
-            <div class="info-grid">
-                <div class="info-item">
-                    <span class="item-icon"><i class="fas fa-comments"></i></span>
-                    <h3>Мгновенная квалификация лидов</h3>
-                    <p>Привлекайте посетителей сайта немедленно, задавайте квалифицирующие вопросы и выявляйте высокопотенциальных лидов 24/7.</p>
-                </div>
-                <div class="info-item">
-                    <span class="item-icon"><i class="fas fa-calendar-check"></i></span>
-                    <h3>Автоматическая запись на консультацию</h3>
-                    <p>Беспрепятственно записывайте квалифицированных лидов на первичные консультации прямо в календарь вашей фирмы согласно вашей доступности.</p>
-                </div>
-                <div class="info-item">
-                    <span class="item-icon"><i class="fas fa-clock"></i></span>
-                    <h3>Никогда не упускайте возможность</h3>
-                    <p>Собирайте лидов и оказывайте первичную поддержку даже в нерабочее время, гарантируя, что ни один потенциальный клиент не будет проигнорирован.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="problems-section"> <!-- This will have a var(--bg-white) background -->
+    <!-- SECTION ORDER CHANGED: Problems section is now first -->
+    <section class="problems-section"> <!-- This will now have a var(--bg-light) background -->
         <div class="container">
             <h2 class="section-title">Решите проблемы привлечения клиентов в вашей фирме</h2>
             <p class="section-subtitle">Традиционные методы привлечения клиентов устарели. Bagira AI решает ключевые болевые точки.</p>
@@ -447,12 +421,36 @@
         </div>
     </section>
 
+    <section class="features-section"> <!-- This will now have a var(--bg-white) background -->
+        <div class="container">
+            <h2 class="section-title">Расширьте возможности вашей фирмы с Bagira AI</h2>
+            <p class="section-subtitle">Оптимизируйте процесс привлечения клиентов, улучшите скорость ответа и освободите вашу команду для оплачиваемой работы.</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="item-icon"><i class="fas fa-comments"></i></span>
+                    <h3>Мгновенная квалификация лидов</h3>
+                    <p>Привлекайте посетителей сайта немедленно, задавайте квалифицирующие вопросы и выявляйте высокопотенциальных лидов 24/7.</p>
+                </div>
+                <div class="info-item">
+                    <span class="item-icon"><i class="fas fa-calendar-check"></i></span>
+                    <h3>Автоматическая запись на консультацию</h3>
+                    <p>Беспрепятственно записывайте квалифицированных лидов на первичные консультации прямо в календарь вашей фирмы согласно вашей доступности.</p>
+                </div>
+                <div class="info-item">
+                    <span class="item-icon"><i class="fas fa-clock"></i></span>
+                    <h3>Никогда не упускайте возможность</h3>
+                    <p>Собирайте лидов и оказывайте первичную поддержку даже в нерабочее время, гарантируя, что ни один потенциальный клиент не будет проигнорирован.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA TEXT UPDATED -->
     <section class="cta-vapi-section">
       <div class="container">
         <h3>Попробуйте Bagira AI в действии</h3>
         <p>
-          Узнайте, как Bagira AI взаимодействует с потенциальными клиентами. Нажмите на иконку микрофона
-          (обычно в правом нижнем углу экрана) для демонстрации клиентского опыта.
+          Узнайте, как Bagira AI взаимодействует с потенциальными клиентами. Нажмите на иконку микрофона и запишитесь на консультацию.
         </p>
       </div>
     </section>
