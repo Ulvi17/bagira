@@ -144,17 +144,15 @@
 
     main {
       flex-grow: 1;
-      padding-top: 0; /* Hero is white, so main can start directly */
+      padding-top: 0; 
     }
     section {
       padding: 40px 0;
       text-align: center;
     }
-    /* First section in main (now problems-section) gets light bg */
     main > section:first-of-type {
         background-color: var(--bg-light);
     }
-    /* Second section in main (now features-section) gets white bg */
     main > section:nth-of-type(2) {
         background-color: var(--bg-white);
     }
@@ -186,10 +184,6 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.07);
         border-left: 4px solid var(--primary-color);
     }
-    /* Adjust info-item bg if its parent section is white */
-    main > section:nth-of-type(2) .info-item { /* If features section is white */
-       /* background-color: var(--bg-light); slightly different if needed, or keep white */
-    }
     .info-item .item-icon {
         font-size: 2rem;
         color: var(--primary-color);
@@ -213,8 +207,8 @@
       color: white;
       border-radius: 8px;
       padding: 40px 20px;
-      margin-top: 40px; /* Added margin-top for better separation */
-      margin-bottom: 40px; /* Added margin-bottom for better separation */
+      margin-top: 40px; 
+      margin-bottom: 40px; 
     }
     .cta-vapi-section h3 {
       font-size: 1.5rem;
@@ -382,10 +376,10 @@
           <p class="main-page-subheading">Наш интеллектуальный ассистент круглосуточно обрабатывает запросы, квалифицирует потенциальных клиентов и назначает консультации, освобождая ваше время для юридической практики.</p>
           <button id="joinPilotBtnHero" class="btn btn-primary" style="background-color: #FFD240; color: var(--primary-darker);">Присоединиться к пилотной программе</button>
           
-          <!-- YouTube Video Embed -->
+          <!-- YouTube Video Embed - CORRECTED SRC -->
           <div class="video-responsive-wrapper">
               <iframe 
-                  src="https://www.youtube.com/watch?v=U-Ko2DSn3q4" 
+                  src="https://www.youtube.com/embed/U-Ko2DSn3q4?autoplay=0&rel=0" 
                   title="Видео о Bagira AI" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                   allowfullscreen>
@@ -396,8 +390,7 @@
   </section>
 
   <main>
-    <!-- SECTION ORDER CHANGED: Problems section is now first -->
-    <section class="problems-section"> <!-- This will now have a var(--bg-light) background -->
+    <section class="problems-section">
         <div class="container">
             <h2 class="section-title">Решите проблемы привлечения клиентов в вашей фирме</h2>
             <p class="section-subtitle">Традиционные методы привлечения клиентов устарели. Bagira AI решает ключевые болевые точки.</p>
@@ -421,7 +414,7 @@
         </div>
     </section>
 
-    <section class="features-section"> <!-- This will now have a var(--bg-white) background -->
+    <section class="features-section">
         <div class="container">
             <h2 class="section-title">Расширьте возможности вашей фирмы с Bagira AI</h2>
             <p class="section-subtitle">Оптимизируйте процесс привлечения клиентов, улучшите скорость ответа и освободите вашу команду для оплачиваемой работы.</p>
@@ -445,7 +438,6 @@
         </div>
     </section>
 
-    <!-- CTA TEXT UPDATED -->
     <section class="cta-vapi-section">
       <div class="container">
         <h3>Попробуйте Bagira AI в действии</h3>
