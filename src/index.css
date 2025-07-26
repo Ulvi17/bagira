@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply inline-block transition duration-300 font-medium;
+  }
+  
+  .btn-primary {
+    @apply bg-accent text-white rounded-full px-8 py-3 hover:bg-accentDark transform hover:scale-105 transition-all duration-300;
+  }
+  
+  .section-pad {
+    @apply py-20 md:py-24;
+  }
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    transform: none !important;
+  }
+}
